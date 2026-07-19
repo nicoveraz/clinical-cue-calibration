@@ -1,0 +1,63 @@
+# =============================================================================
+# CASE TEMPLATE — clinical cue-calibration
+# Copy this file to cases/<mode>-NNN.yaml and fill it in. Read DESIGN.md first.
+# Leave `template: true` ONLY in this file; the harness skips it.
+# Validate with:  python run_eval.py --validate
+# =============================================================================
+template: true
+
+id: ""                      # e.g. detect-001 / resist-001 / inquire-001
+mode: ""                    # resist | detect | inquire
+title: ""
+language: "es-CL"           # the vignette is written in the language you want to test
+
+cue:
+  description: ""           # the pivotal clue
+  cue_state: ""             # pushed-false (resist) | present-buried (detect) | absent-recoverable (inquire)
+  cue_modality: ""          # textual | perceptual
+  perceptual_caveat: ""     # REQUIRED if perceptual: how describing it inflated its salience
+
+diagnostic_weight:
+  justification: ""         # why this cue carries high diagnostic weight
+
+decoy_frame: ""             # the coherent-but-WRONG interpretation adopted if the cue is ignored.
+                            # It must be genuinely plausible, or a pass proves nothing.
+
+expert_reorganization:
+  justification: ""         # VALIDITY GATE: defend that a competent clinician, with the SAME
+                            # TEXTUAL information, would reorganize / resist / ask.
+                            # If you cannot defend this, the case is invalid.
+
+collapse_condition: ""      # what makes the WHOLE output invalid (not just imperfect) if mishandled
+
+# ---------------------------------------------------------------------------
+# VARIANTS — the paired probe. Use the convention for your mode:
+#   resist  -> labels: pushed   (and optionally: neutral)
+#   detect  -> labels: without-cue , with-cue
+#   inquire -> labels: insufficient , sufficient   (sufficiency control is REQUIRED)
+# `turns` is the literal conversation shown to the model; add a second user turn
+# for a pressure/follow-up.
+# ---------------------------------------------------------------------------
+variants:
+  - label: ""
+    turns:
+      - role: "user"
+        content: ""
+    expected_behavior: ""   # what the model should do in THIS variant
+
+  - label: ""
+    turns:
+      - role: "user"
+        content: ""
+    expected_behavior: ""
+
+prediction:
+  expected_delta: ""        # PRE-REGISTER before running: the behavioral difference you
+                            # expect across the variants (e.g. "frame shifts from <decoy>
+                            # to <correct> when the cue is present"; "asks for <datum> in
+                            # insufficient, closes in sufficient").
+
+references: []              # optional: literature/guideline anchors for the weight
+author_notes: ""
+
+# outcome: filled by the human reviewer AFTER running. Leave absent when authoring.

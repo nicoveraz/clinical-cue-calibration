@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/nicoveraz/clinical-cue-calibration/schema/case.schema.json",
+  "title": "Clinical cue-calibration case",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id", "mode", "cue", "diagnostic_weight", "decoy_frame",
+    "expert_reorganization", "collapse_condition", "variants", "prediction"
+  ],
+  "properties": {
+    "id": { "type": "string", "description": "Unique case id, e.g. detect-001." },
+    "template": { "type": "boolean", "description": "If true, the harness skips this file." },
+    "mode": { "enum": ["resist", "detect", "inquire"] },
+    "title": { "type": "string" },
+    "language": { "type": "string", "description": "BCP-47 tag of the vignette text, e.g. es-CL." },
+
+    "cue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["description", "cue_state", "cue_modality"],
+      "properties": {
+        "description": { "type": "string", "description": "The pivotal clue." },
+        "cue_state": {
+          "enum": ["pushed-false", "present-buried", "absent-recoverable"],
+          "description": "pushed-false→resist; present-buried→detect; absent-recoverable→inquire."
+        },
+        "cue_modality": {
+          "enum": ["textual", "perceptual"],
+          "description": "textual cues survive being written; perceptual cues inflate salience when described (DESIGN 5.2)."
+        },
+        "perceptual_caveat": {
+          "type": "string",
+          "description": "Required when cue_modality is perceptual: state how describing it inflated salience."
+        }
+      }
+    },
+
+    "diagnostic_weight": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["justification"],
+      "properties": {
+        "justification": { "type": "string", "description": "Why this cue has high diagnostic weight." }
+      }
+    },
+
+    "decoy_frame": {
+      "type": "string",
+      "description": "The coherent-but-wrong interpretation an answer adopts if the cue is ignored. Must be genuinely plausible (DESIGN 6)."
+    },
+
+    "expert_reorganization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["justification"],
+      "properties": {
+        "justification": {
+          "type": "string",
+          "description": "VALIDITY GATE (DESIGN 5.1): defend that a competent clinician with the SAME TEXTUAL information would reorganize / resist / ask. If you cannot defend this, the case is invalid."
+        }
+      }
+    },
+
+    "collapse_condition": {
+      "type": "string",
+      "description": "What makes the WHOLE output (dx/prognosis/plan) invalid, not merely imperfect, when the cue is mishandled."
+    },
+
+    "variants": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Paired conditions. Conventions: resist→[pushed,(neutral)]; detect→[without-cue,with-cue]; inquire→[insufficient,sufficient].",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["label", "turns", "expected_behavior"],
+        "properties": {
+          "label": { "type": "string" },
+          "turns": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["role", "content"],
+              "properties": {
+                "role": { "enum": ["user", "assistant"] },
+                "content": { "type": "string" }
+              }
+            }
+          },
+          "expected_behavior": { "type": "string" }
+        }
+      }
+    },
+
+    "prediction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["expected_delta"],
+      "properties": {
+        "expected_delta": {
+          "type": "string",
+          "description": "PRE-REGISTERED (DESIGN 9): the behavioral difference expected across variants, recorded before running any model."
+        }
+      }
+    },
+
+    "references": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Literature/guideline anchors for the cue's weight (optional)."
+    },
+    "author_notes": { "type": "string" },
+
+    "outcome": {
+      "type": "object",
+      "description": "Filled by the human reviewer AFTER running. Leave blank when authoring.",
+      "additionalProperties": true
+    }
+  }
+}

@@ -1,0 +1,24 @@
+[project]
+name = "clinical-cue-calibration"
+version = "0.1.0"
+description = "An evaluation apparatus for whether clinical LLMs weight diagnostic evidence correctly: resist, detect, and inquire failure modes with a paired-probe harness."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "CC-BY-4.0" }
+authors = [{ name = "Nicolás Vera Zúñiga" }]
+dependencies = ["pyyaml>=6.0"]
+
+[project.optional-dependencies]
+anthropic = ["anthropic>=0.40"]
+openai = ["openai>=1.40"]
+all = ["anthropic>=0.40", "openai>=1.40"]
+
+[project.scripts]
+run-eval = "run_eval:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+py-modules = ["run_eval"]

@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this apparatus, please cite this repository."
+title: "Clinical Cue Calibration — an evaluation apparatus"
+authors:
+  - family-names: "Vera Zúñiga"
+    given-names: "Nicolás"
+    affiliation: "Quetru Ltda."
+license: CC-BY-4.0
+repository-code: "https://github.com/nicoveraz/clinical-cue-calibration"
+keywords:
+  - model-evaluation
+  - clinical-safety
+  - large-language-models
+  - selective-prediction
+  - red-teaming
+references:
+  - type: software
+    title: "boundary-signature: A Measurement Protocol for Per-Step Belief Monitoring in Chain-of-Thought Reasoning"
+    authors:
+      - family-names: "Vera Zúñiga"
+        given-names: "Nicolás"
+        affiliation: "Quetru Ltda."
+    doi: "10.5281/zenodo.20672237"
