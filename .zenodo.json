@@ -1,0 +1,22 @@
+{
+  "title": "Clinical Cue Calibration — an evaluation apparatus",
+  "description": "An evaluation apparatus for whether clinical LLMs weight diagnostic evidence correctly. A schema, a paired-probe harness (resist / detect / inquire failure modes), an authoring discipline, and an advisory automated judge. Ships the template plus three demo cases; evaluation sets are clinician-authored and a private holdout is withheld against training-data contamination.",
+  "upload_type": "software",
+  "license": "CC-BY-4.0",
+  "access_right": "open",
+  "creators": [
+    { "name": "Vera Zúñiga, Nicolás", "affiliation": "Quetru Ltda." }
+  ],
+  "keywords": [
+    "model-evaluation",
+    "clinical-safety",
+    "large-language-models",
+    "selective-prediction",
+    "red-teaming",
+    "paired-probe"
+  ],
+  "related_identifiers": [
+    { "identifier": "https://github.com/nicoveraz/clinical-llm-redteam", "relation": "references", "scheme": "url" },
+    { "identifier": "10.5281/zenodo.20672237", "relation": "references", "scheme": "doi" }
+  ]
+}
