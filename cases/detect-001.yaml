@@ -1,0 +1,89 @@
+# Demo case — detect. See cases/README.md: demo cases illustrate the instrument;
+# evaluation sets proper are authored per DESIGN.md, with a private holdout.
+id: detect-001
+mode: detect
+title: "Confusión en adulta mayor — el fármaco enterrado"
+language: "es-CL"
+
+cue:
+  description: >
+    Mención al pasar, en boca de la hija, de que la paciente toma amitriptilina
+    desde hace unos diez días, "que le dejaron para dormir".
+  cue_state: "present-buried"
+  cue_modality: "textual"
+  perceptual_caveat: ""
+
+diagnostic_weight:
+  justification: >
+    Fármaco nuevo con alta carga anticolinérgica + confusión nueva en una mujer
+    de 82 años: delirium iatrogénico hasta demostrar lo contrario. La relación
+    temporal (inicio del fármaco ~10 días, confusión ~1 semana) y los signos
+    anticolinérgicos del examen (mucosas secas, inatención fluctuante) le dan al
+    dato un peso diagnóstico que reorganiza todo el cuadro.
+
+decoy_frame: >
+  Deterioro cognitivo en progresión ("demencia que debutó") o el reflejo de
+  "ITU del adulto mayor": estudio de deterioro + urocultivo, sin tocar los
+  fármacos.
+
+expert_reorganization:
+  justification: >
+    Con el mismo texto, un clínico competente hace la conciliación de
+    medicamentos como primer acto ante confusión nueva en un adulto mayor, y la
+    amitriptilina reciente — mencionada aunque sea al pasar — se vuelve el eje
+    del cuadro: suspender el fármaco, buscar otras causas de delirium en
+    paralelo. No requiere examen físico adicional; el dato está en el relato.
+
+collapse_condition: >
+  Un plan construido sobre "demencia en progresión" o "ITU" que no suspende la
+  amitriptilina deja a la paciente expuesta al agente causal mientras se la
+  estudia por otra cosa: la totalidad del plan es inválida aunque cada paso
+  interno sea coherente.
+
+variants:
+  - label: "with-cue"
+    turns:
+      - role: "user"
+        content: >
+          Mujer de 82 años traída por su hija por confusión fluctuante de una
+          semana: ratos desorientada, ratos casi normal, anoche no reconoció el
+          pasillo de su casa. Antecedentes de hipertensión y artrosis. La hija
+          comenta al pasar que desde hace unos diez días toma amitriptilina que
+          le dejaron para dormir, además de sus remedios de siempre. Sin fiebre,
+          sin caídas. Al examen: vigil, inatenta, desorientada en tiempo, mucosas
+          secas, sin focalidad. Signos vitales normales. ¿Diagnóstico más
+          probable y plan?
+    expected_behavior: >
+      Reorganizar el cuadro en torno al fármaco: delirium anticolinérgico por
+      amitriptilina reciente como hipótesis central — suspenderla, estudio de
+      delirium en paralelo. No basta nombrar el fármaco en una lista: debe
+      re-centrar el diagnóstico y el plan.
+
+  - label: "without-cue"
+    turns:
+      - role: "user"
+        content: >
+          Mujer de 82 años traída por su hija por confusión fluctuante de una
+          semana: ratos desorientada, ratos casi normal, anoche no reconoció el
+          pasillo de su casa. Antecedentes de hipertensión y artrosis. La hija
+          comenta al pasar que duerme mal desde hace tiempo y que no ha habido
+          cambios en sus remedios de siempre. Sin fiebre, sin caídas. Al examen:
+          vigil, inatenta, desorientada en tiempo, mucosas secas, sin focalidad.
+          Signos vitales normales. ¿Diagnóstico más probable y plan?
+    expected_behavior: >
+      Sin el fármaco disponible en el texto, un estudio amplio de delirium del
+      adulto mayor es razonable. Esta variante fija la línea base: lo que el
+      modelo hace cuando la pista no existe.
+
+prediction:
+  expected_delta: >
+    El marco debe desplazarse entre variantes: de "estudio amplio de delirium /
+    deterioro" (without-cue) a "delirium por amitriptilina — suspender el
+    fármaco" (with-cue). Sin desplazamiento — misma respuesta genérica en ambas —
+    el modelo no asignó peso al dato enterrado.
+
+references:
+  - "Delirium por anticolinérgicos en el adulto mayor; conciliación de medicamentos ante confusión nueva — enseñanza estándar de geriatría/urgencia"
+author_notes: >
+  Demo case. Variants are matched in length, structure, and the position of the
+  daughter's aside; only the cue clause differs (DESIGN 6, salience leakage).

@@ -3,8 +3,10 @@
 A framework and harness for probing whether a clinical LLM assigns diagnostic
 evidence **the weight it deserves**. This is not a collection of test cases. It is the
 **mould** that generates them: a schema, a paired-probe instrument, and an authoring
-discipline. The `cases/` directory ships with a single empty `TEMPLATE` — the cases
-are written by the clinician, not by the tool.
+discipline. The `cases/` directory ships with the `TEMPLATE` and **three demo
+cases** (one per mode) that exist to show the instrument working — the evaluation
+sets proper are written by the clinician, not by the tool, and a private holdout
+set is withheld against training-data contamination.
 
 ---
 
@@ -77,9 +79,12 @@ Supporting technical work: `boundary-signature` (UQ / selective prediction),
 - **It is** an apparatus: the meta-structure, a case schema (`schema/`), an authoring
   discipline (`AUTHORING.md`), the experimental design (`DESIGN.md`), and a
   paired-probe harness (`run_eval.py`).
-- **It is not** a finished benchmark. `cases/` contains only `TEMPLATE.yaml`. Cases
-  are authored by the clinician from experience, under the validity criteria in
-  `DESIGN.md`.
+- **It is not** a finished benchmark. `cases/` ships the template plus three demo
+  cases (`resist-001`, `detect-001`, `inquire-001`) that demonstrate the paired
+  probe; evaluation sets proper are authored by the clinician from experience,
+  under the validity criteria in `DESIGN.md`, and a private holdout set is
+  withheld so results stay meaningful after the public cases enter training
+  corpora.
 - It uses **no proprietary or patient data**. Cases are synthetic vignettes; the
   validity of each cue rests on clinical judgment, not on any record.
 

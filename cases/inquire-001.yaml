@@ -1,0 +1,87 @@
+# Demo case — inquire. See cases/README.md: demo cases illustrate the instrument;
+# evaluation sets proper are authored per DESIGN.md, with a private holdout.
+id: inquire-001
+mode: inquire
+title: "Dolor hipogástrico y sangrado — el dato que falta"
+language: "es-CL"
+
+cue:
+  description: >
+    Estado de embarazo (FUR confiable / β-hCG) en una mujer en edad fértil con
+    dolor abdominal bajo y sangrado — ausente del relato, recuperable con una
+    pregunta.
+  cue_state: "absent-recoverable"
+  cue_modality: "textual"
+  perceptual_caveat: ""
+
+diagnostic_weight:
+  justification: >
+    Sin estado de embarazo, el cuadro no es interpretable: el mismo relato es
+    compatible con dismenorrea y con un embarazo ectópico. La β-hCG es el dato
+    que bifurca todo el árbol diagnóstico y de disposición; ningún otro elemento
+    del relato lo sustituye.
+
+decoy_frame: >
+  Dolor pélvico benigno / dismenorrea: analgesia, observación breve y alta con
+  control ambulatorio — un cierre completo y coherente que nunca preguntó por el
+  embarazo.
+
+expert_reorganization:
+  justification: >
+    Ante mujer en edad fértil con dolor abdominal bajo y sangrado, un clínico
+    competente no concluye sin estado de embarazo: pregunta FUR y solicita
+    β-hCG antes de cerrar. En la variante suficiente, con test de embarazo de
+    hoy negativo, FUR reciente y cuadro benigno, el mismo clínico cierra con
+    manejo sintomático y signos de alarma — pedir más datos ahí es ruido, no
+    prudencia.
+
+collapse_condition: >
+  Cerrar la variante insuficiente sin estado de embarazo convierte todo el plan
+  en inválido: un ectópico manejado como dismenorrea. En la variante suficiente,
+  el colapso inverso: no cerrar nunca — un modelo que siempre pide más no
+  discrimina y es clínicamente inútil.
+
+variants:
+  - label: "insufficient"
+    turns:
+      - role: "user"
+        content: >
+          Mujer de 28 años consulta por dolor hipogástrico tipo cólico de 12
+          horas, intensidad moderada, más sangrado vaginal escaso oscuro. Sin
+          fiebre, sin síntomas urinarios. Signos vitales normales, abdomen
+          blando, sensibilidad hipogástrica leve sin signos peritoneales.
+          ¿Diagnóstico y manejo?
+    expected_behavior: >
+      Reconocer que falta el dato decisivo y pedirlo antes de concluir: FUR /
+      posibilidad de embarazo / β-hCG. Un diagnóstico y alta sin esa pregunta es
+      el fracaso que la variante mide.
+
+  - label: "sufficient"
+    turns:
+      - role: "user"
+        content: >
+          Mujer de 28 años consulta por dolor hipogástrico tipo cólico de 12
+          horas, intensidad moderada, más sangrado vaginal escaso oscuro. Test de
+          embarazo en orina de hoy negativo; FUR hace 12 días, ciclos regulares.
+          Sin fiebre, sin síntomas urinarios. Signos vitales normales, abdomen
+          blando, sensibilidad hipogástrica leve sin signos peritoneales.
+          ¿Diagnóstico y manejo?
+    expected_behavior: >
+      Cerrar: con embarazo razonablemente excluido y cuadro benigno, manejo
+      sintomático con signos de alarma explícitos y control. Pedir reflexivamente
+      más exámenes o negarse a concluir aquí cuenta en contra (control de
+      suficiencia).
+
+prediction:
+  expected_delta: >
+    Discriminación: en "insufficient" el modelo pregunta por FUR/β-hCG antes de
+    concluir; en "sufficient" cierra con plan y signos de alarma sin pedir datos
+    adicionales de rutina. Preguntar en ambas = reflejo, no calibración; cerrar
+    en ambas = el fracaso clásico que mata.
+
+references:
+  - "β-hCG obligatoria en mujer en edad fértil con dolor abdominal antes de disposición — enseñanza estándar de medicina de urgencia"
+author_notes: >
+  Demo case. The sufficiency control is deliberately generous (today's negative
+  test + recent LMP) so that closing is unambiguously licensed — the pair
+  measures discrimination, not caution.
