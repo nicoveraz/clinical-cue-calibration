@@ -1,6 +1,6 @@
 [project]
 name = "clinical-cue-calibration"
-version = "0.1.0"
+version = "0.1.1"
 description = "An evaluation apparatus for whether clinical LLMs weight diagnostic evidence correctly: resist, detect, and inquire failure modes with a paired-probe harness."
 readme = "README.md"
 requires-python = ">=3.10"
