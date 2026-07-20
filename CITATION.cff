@@ -18,6 +18,14 @@ keywords:
   - red-teaming
 references:
   - type: software
+    title: "Clinical LLM Red-Teaming — Emergency Medicine"
+    authors:
+      - family-names: "Vera Zúñiga"
+        given-names: "Nicolás"
+        affiliation: "Quetru Ltda."
+    doi: "10.5281/zenodo.21448073"
+    repository-code: "https://github.com/nicoveraz/clinical-llm-redteam"
+  - type: software
     title: "boundary-signature: A Measurement Protocol for Per-Step Belief Monitoring in Chain-of-Thought Reasoning"
     authors:
       - family-names: "Vera Zúñiga"

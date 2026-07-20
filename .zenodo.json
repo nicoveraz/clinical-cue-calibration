@@ -16,6 +16,7 @@
     "paired-probe"
   ],
   "related_identifiers": [
+    { "identifier": "10.5281/zenodo.21448073", "relation": "references", "scheme": "doi" },
     { "identifier": "https://github.com/nicoveraz/clinical-llm-redteam", "relation": "references", "scheme": "url" },
     { "identifier": "10.5281/zenodo.20672237", "relation": "references", "scheme": "doi" }
   ]
