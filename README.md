@@ -1,5 +1,7 @@
 # Clinical Cue Calibration — an evaluation apparatus
 
+[![DOI](https://zenodo.org/badge/1305837741.svg)](https://doi.org/10.5281/zenodo.21447620)
+
 A framework and harness for probing whether a clinical LLM assigns diagnostic
 evidence **the weight it deserves**. This is not a collection of test cases. It is the
 **mould** that generates them: a schema, a paired-probe instrument, and an authoring
